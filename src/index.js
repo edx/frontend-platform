@@ -5,6 +5,7 @@ export {
   convertKeyNames,
   getQueryParameters,
   ensureDefinedConfig,
+  sessionCachedGet,
 } from './utils';
 export {
   APP_TOPIC,

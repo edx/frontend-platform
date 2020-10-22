@@ -4,6 +4,7 @@ import {
   snakeCaseObject,
   convertKeyNames,
   getQueryParameters,
+  sessionCachedGet,
 } from './';
 
 describe('modifyObjectKeys', () => {
@@ -110,6 +111,50 @@ describe('getQueryParameters', () => {
     expect(getQueryParameters('?foo=bar&baz=1')).toEqual({
       foo: 'bar',
       baz: '1',
+    });
+  });
+});
+
+describe('sessionCachedGet', () => {
+  class MockHttpClient {
+    constructor(status) {
+      this.status = status;
+    }
+    get() {
+      return Promise.resolve(JSON.parse(`{"status": ${this.status}}`));
+    }
+  }
+  const url = 'https://url.com';
+
+  it('should make the HTTP Get request when sessionStorage is not set', () => {
+    sessionStorage.clear();
+    const mockClient = new MockHttpClient(200);
+    const spy = jest.spyOn(mockClient, 'get');
+    sessionCachedGet(mockClient, url).then(() => {
+      expect(spy).toHaveBeenCalled(1);
+      expect(sessionStorage.getItem(url)).toBeTruthy();
+    });
+  });
+  it('should not make the HTTP Get request when sessionStorage is set', () => {
+    sessionStorage.clear();
+    const mockClient = new MockHttpClient(200);
+    const spy = jest.spyOn(mockClient, 'get');
+    sessionCachedGet(mockClient, url).then(() => {
+      sessionCachedGet(mockClient, url).then(() => {
+        expect(spy).toHaveBeenCalled(1);
+        expect(sessionStorage.getItem(url)).toBeTruthy();
+      });
+    });
+  });
+  it('should not store the response when an error occurs', () => {
+    sessionStorage.clear();
+    const mockClient = new MockHttpClient(404);
+    const spy = jest.spyOn(mockClient, 'get');
+    sessionCachedGet(mockClient, url).then(() => {
+      sessionCachedGet(mockClient, url).then(() => {
+        expect(spy).toHaveBeenCalled(2);
+        expect(sessionStorage.getItem(url)).toBeNull();
+      });
     });
   });
 });

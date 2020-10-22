@@ -166,3 +166,30 @@ export function ensureDefinedConfig(object, requester) {
     }
   });
 }
+
+/**
+ * This function caches the response from a successful get request in the browser's sessionStorage
+ * Additional requests to the same url will use the response data stored in sessionStorage instead
+ * of making the request again, saving on network calls.
+ *
+ * Requests that should be used with this are ones where the response data is associated with the
+ * user in the session and where the data in the response either won't change at all or will not
+ * change for an extended period of time.
+ *
+ * @param {Object} client An HttpClient that implements a 'get' function that returns a Promise
+ * @param {string} url The URL to make the HTTP Get request to
+ */
+export function sessionCachedGet(client, url) {
+  if (sessionStorage.getItem(url) !== null) {
+    const cached = JSON.parse(sessionStorage.getItem(url));
+    return Promise.resolve(cached);
+  }
+
+  const promise = client.get(url);
+  promise.then((response) => {
+    if (response.status < 400) {
+      sessionStorage.setItem(url, JSON.stringify(response));
+    }
+  });
+  return promise;
+}
