@@ -17,7 +17,7 @@ class SegmentAnalyticsService {
   }
 
   // The code in this function is from Segment's website, with the following
-  // update: - Takes the segment key as a parameter (
+  // update: - Takes the segment key as a parameter
   // https://segment.com/docs/sources/website/analytics.js/quickstart/
   initialize() {
     // Create a queue, but don't obliterate an existing one!
@@ -193,6 +193,18 @@ class SegmentAnalyticsService {
   sendTrackEvent(eventName, properties) {
     this.checkIdentifyCalled();
     global.analytics.track(eventName, properties);
+  }
+
+  /**
+   * Sends a trackLink event to Segment and downstream.
+   *
+   * @param {*} element
+   * @param {*} name
+   * @param {*} [properties]
+   */
+  sendTrackLinkEvent(element, name, properties) {
+    this.checkIdentifyCalled();
+    global.analytics.trackLink(element, name, properties);
   }
 
   /**

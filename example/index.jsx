@@ -10,21 +10,34 @@ import {
 } from '@edx/frontend-platform/react';
 import { APP_INIT_ERROR, APP_READY, initialize } from '@edx/frontend-platform';
 import { subscribe } from '@edx/frontend-platform/pubSub';
+import { getAnalyticsService } from '@edx/frontend-platform/analytics';
+import { ParagonProvider } from '@edx/paragon';
 
-import './index.scss';
 import ExamplePage from './ExamplePage';
+import ExamplePageWithAnalytics from './ExamplePageWithAnalytics';
 import AuthenticatedPage from './AuthenticatedPage';
 
+import './index.scss';
+
 subscribe(APP_READY, () => {
+  const analyticsService = getAnalyticsService();
+
   ReactDOM.render(
     <AppProvider>
-      <PageRoute exact path="/" component={ExamplePage} />
-      <PageRoute
-        exact
-        path="/error_example"
-        component={() => <ErrorPage message="Test error message" />}
-      />
-      <AuthenticatedPageRoute exact path="/authenticated" component={AuthenticatedPage} />
+      <ParagonProvider
+        analytics={{
+          sendTrackEvent: (eventName, eventPoperties) => analyticsService.sendTrackEvent(eventName, eventPoperties),
+        }}
+      >
+        <PageRoute exact path="/" component={ExamplePage} />
+        <PageRoute exact path="/analytics" component={ExamplePageWithAnalytics} />
+        <PageRoute
+          exact
+          path="/error_example"
+          component={() => <ErrorPage message="Test error message" />}
+        />
+        <AuthenticatedPageRoute exact path="/authenticated" component={AuthenticatedPage} />
+      </ParagonProvider>
     </AppProvider>,
     document.getElementById('root'),
   );

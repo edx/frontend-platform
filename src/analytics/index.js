@@ -4,6 +4,7 @@ export {
   identifyAuthenticatedUser,
   sendPageEvent,
   sendTrackEvent,
+  sendTrackLinkEvent,
   sendTrackingLogEvent,
   getAnalyticsService,
   resetAnalyticsService,

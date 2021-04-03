@@ -42,6 +42,7 @@ const serviceShape = {
   identifyAnonymousUser: PropTypes.func.isRequired,
   sendTrackEvent: PropTypes.func.isRequired,
   sendPageEvent: PropTypes.func.isRequired,
+  sendTrackLinkEvent: PropTypes.func.isRequired,
 };
 
 let service;
@@ -102,6 +103,17 @@ export function sendTrackEvent(eventName, properties) {
 /**
  *
  *
+ * @param {*} element
+ * @param {*} name
+ * @param {*} properties
+ */
+export function sendTrackLinkEvent(element, name, properties) {
+  service.sendTrackLinkEvent(element, name, properties);
+}
+
+/**
+ *
+ *
  * @param {*} category
  * @param {*} name
  * @param {*} properties
@@ -139,4 +151,5 @@ export function resetAnalyticsService() {
  * @property {function} sendPageEvent
  * @property {function} sendTrackEvent
  * @property {function} sendTrackingLogEvent
+ * @property {function} sendTrackLinkEvent
  */

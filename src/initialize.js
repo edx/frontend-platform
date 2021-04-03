@@ -46,6 +46,7 @@
  */
 
 import { createBrowserHistory, createMemoryHistory } from 'history';
+
 import {
   publish,
 } from './pubSub';
@@ -55,7 +56,10 @@ import {
   configure as configureLogging, getLoggingService, NewRelicLoggingService, logError,
 } from './logging';
 import {
-  configure as configureAnalytics, SegmentAnalyticsService, identifyAnonymousUser, identifyAuthenticatedUser,
+  configure as configureAnalytics,
+  SegmentAnalyticsService,
+  identifyAnonymousUser,
+  identifyAuthenticatedUser,
 } from './analytics';
 import {
   getAuthenticatedHttpClient,

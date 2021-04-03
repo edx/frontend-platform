@@ -5,6 +5,8 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { logInfo } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { ensureConfig, mergeConfig, getConfig } from '@edx/frontend-platform';
+import { Container } from '@edx/paragon';
+
 import messages from './messages';
 
 mergeConfig({
@@ -40,13 +42,14 @@ class ExamplePage extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <h1>{this.context.config.SITE_NAME} example page.</h1>
         <p>{this.props.intl.formatMessage(messages['example.message'])}</p>
         {this.renderAuthenticatedUser()}
         <p>EXAMPLE_VAR env var came through: <strong>{getConfig().EXAMPLE_VAR}</strong></p>
         <p>Visit <Link to="/authenticated">authenticated page</Link>.</p>
-      </div>
+        <p>Visit <Link to="/analytics">analytics example page</Link>.</p>
+      </Container>
     );
   }
 }
