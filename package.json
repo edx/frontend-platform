@@ -52,7 +52,7 @@
     "redux": "4.1.0"
   },
   "dependencies": {
-    "@cospired/i18n-iso-languages": "2.2.0",
+    "@cospired/i18n-iso-languages": "3.0.0",
     "axios": "0.21.1",
     "axios-cache-adapter": "2.7.3",
     "form-urlencoded": "4.1.4",
