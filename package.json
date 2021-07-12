@@ -57,7 +57,7 @@
     "axios-cache-adapter": "2.7.3",
     "form-urlencoded": "4.1.4",
     "glob": "7.1.7",
-    "history": "4.10.1",
+    "history": "5.0.0",
     "i18n-iso-countries": "4.3.1",
     "jwt-decode": "2.2.0",
     "localforage": "1.9.0",
