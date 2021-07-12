@@ -67,7 +67,7 @@
     "lodash.merge": "4.6.2",
     "lodash.snakecase": "4.1.1",
     "pubsub-js": "1.9.3",
-    "react-intl": "2.9.0",
+    "react-intl": "5.20.4",
     "universal-cookie": "4.0.4"
   },
   "peerDependencies": {
