@@ -213,6 +213,7 @@ export async function initialize({
   hydrateAuthenticatedUser: hydrateUser = false,
   messages,
   handlers: overrideHandlers = {},
+  config = getConfig()
 }) {
   const handlers = applyOverrideHandlers(overrideHandlers);
   try {
@@ -226,7 +227,7 @@ export async function initialize({
 
     // Logging
     configureLogging(loggingService, {
-      config: getConfig(),
+      config: config,
     });
     await handlers.logging();
     publish(APP_LOGGING_INITIALIZED);
@@ -234,14 +235,14 @@ export async function initialize({
     // Authentication
     configureAuth(authService, {
       loggingService: getLoggingService(),
-      config: getConfig(),
+      config: config,
     });
     await handlers.auth(requireUser, hydrateUser);
     publish(APP_AUTH_INITIALIZED);
 
     // Analytics
     configureAnalytics(analyticsService, {
-      config: getConfig(),
+      config: config,
       loggingService: getLoggingService(),
       httpClient: getAuthenticatedHttpClient(),
     });
@@ -251,7 +252,7 @@ export async function initialize({
     // Internationalization
     configureI18n({
       messages,
-      config: getConfig(),
+      config: config,
       loggingService: getLoggingService(),
     });
     await handlers.i18n();
