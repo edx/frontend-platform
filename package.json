@@ -41,7 +41,7 @@
     "codecov": "3.8.2",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
-    "husky": "6.0.0",
+    "husky": "7.0.1",
     "jsdoc": "3.6.7",
     "nodemon": "2.0.12",
     "prop-types": "15.7.2",
