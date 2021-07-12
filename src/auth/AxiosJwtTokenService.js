@@ -9,7 +9,7 @@ export default class AxiosJwtTokenService {
     return !token || token.exp < Date.now() / 1000;
   }
 
-  constructor(loggingService, tokenCookieName, tokenRefreshEndpoint) {
+  constructor(loggingService, tokenCookieName, tokenRefreshEndpoint, shouldRetry) {
     this.loggingService = loggingService;
     this.tokenCookieName = tokenCookieName;
     this.tokenRefreshEndpoint = tokenRefreshEndpoint;
@@ -20,10 +20,17 @@ export default class AxiosJwtTokenService {
     // certificates. More on MDN:
     // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
     this.httpClient.defaults.withCredentials = true;
-    // Add retries to this axios instance
+    const options = { httpClient: this.httpClient };
+    // Giving MFE option to fail early and show error message instead of
+    // recurrent retries.
+    if (!shouldRetry) {
+      console.log('shouldRetry');
+      options.shouldRetry = () => { return false; };
+    }
+  
     this.httpClient.interceptors.response.use(
       response => response,
-      createRetryInterceptor({ httpClient: this.httpClient }),
+      createRetryInterceptor(options),
     );
 
     this.cookies = new Cookies();

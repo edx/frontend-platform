@@ -18,6 +18,7 @@ const optionsPropTypes = {
     REFRESH_ACCESS_TOKEN_ENDPOINT: PropTypes.string.isRequired,
     ACCESS_TOKEN_COOKIE_NAME: PropTypes.string.isRequired,
     CSRF_TOKEN_API_PATH: PropTypes.string.isRequired,
+    SHOULD_RETRY: PropTypes.bool.isRequired,
   }).isRequired,
   loggingService: PropTypes.shape({
     logError: PropTypes.func.isRequired,
@@ -58,6 +59,7 @@ class AxiosJwtAuthService {
       this.loggingService,
       this.config.ACCESS_TOKEN_COOKIE_NAME,
       this.config.REFRESH_ACCESS_TOKEN_ENDPOINT,
+      this.config.SHOULD_RETRY,
     );
     this.csrfTokenService = new AxiosCsrfTokenService(this.config.CSRF_TOKEN_API_PATH);
     this.authenticatedHttpClient = this.addAuthenticationToHttpClient(axios.create());

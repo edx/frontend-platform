@@ -66,6 +66,7 @@ let config = {
   LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
   LOGO_WHITE_URL: process.env.LOGO_WHITE_URL,
   FAVICON_URL: process.env.FAVICON_URL,
+  SHOULD_RETRY: process.env.SHOULD_RETRY,
 };
 
 /**
